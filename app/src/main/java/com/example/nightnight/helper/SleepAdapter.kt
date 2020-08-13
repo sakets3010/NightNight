@@ -1,10 +1,13 @@
 package com.example.nightnight.helper
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nightnight.R
 import com.example.nightnight.convertDurationToFormatted
@@ -46,6 +49,14 @@ class SleepAdapter(private val sleep: List<Sleep>) : RecyclerView.Adapter<SleepA
             else -> R.drawable.ic_baseline_help_24
         }
         holder.emotion.setImageResource(img)
+        holder.button.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT,"my recent sleep,start time:${holder.startTime.text},duration:${holder.duration.text},rating:${holder.rating.text}/5")
+            intent.type = "text/plain"
+            val bundle = intent.getBundleExtra(Intent.EXTRA_TEXT)
+            startActivity(holder.itemView.context,intent,bundle)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -55,6 +66,7 @@ class SleepAdapter(private val sleep: List<Sleep>) : RecyclerView.Adapter<SleepA
         val duration:TextView = itemView.duration_text
         val rating:TextView = itemView.sleep_rating_text
         val emotion:ImageView=itemView.rating_image
+        val button:ImageButton = itemView.shareButton
     }
 
 

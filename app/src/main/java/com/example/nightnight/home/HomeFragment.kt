@@ -81,7 +81,8 @@ class HomeFragment : Fragment() {
                  Log.d("listing", "data listing: $sleepRecord")
                  binding.sleepRecycler.adapter = SleepAdapter(sleepRecord)
                  binding.sleepRecycler.layoutManager =
-                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                 binding.sleepRecycler.scrollToPosition((binding.sleepRecycler.adapter as SleepAdapter).itemCount-1)
              }
          }
         })

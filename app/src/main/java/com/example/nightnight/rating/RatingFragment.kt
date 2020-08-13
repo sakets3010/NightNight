@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.nightnight.R
 import com.example.nightnight.databinding.RatingFragmentBinding
+import com.google.android.material.snackbar.Snackbar
 
 class RatingFragment : Fragment() {
 
@@ -26,28 +27,27 @@ class RatingFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(RatingViewModel::class.java)
 
         binding.veryUpset.setOnClickListener {
-            viewModel.updateRating(1,args.docId)
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+            update(1,args.docId)
         }
         binding.upset.setOnClickListener {
-            viewModel.updateRating(2,args.docId)
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+            update(2,args.docId)
         }
         binding.satisfactory.setOnClickListener {
-            viewModel.updateRating(3,args.docId)
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+            update(3,args.docId)
         }
         binding.happy.setOnClickListener {
-            viewModel.updateRating(4,args.docId)
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+            update(4,args.docId)
         }
         binding.veryHappy.setOnClickListener {
-            viewModel.updateRating(5,args.docId)
-            findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+            update(5,args.docId)
         }
         return binding.root
     }
 
-
+  private fun update(rating:Int,docId:String){
+      viewModel.updateRating(rating,docId)
+      findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
+      Snackbar.make(requireView(),"sleep record added", Snackbar.LENGTH_LONG).show()
+  }
 
 }
