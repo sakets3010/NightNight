@@ -12,8 +12,9 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="clear">clear</string>
-    <string name="night_night">Night Night</string>
     <string name="minutes_length">%d minutes</string>
     <string name="hours_length">%d hours</string>
     <string name="seconds_length">%d seconds</string>
+    <string name="you_don_t_have_any_sleep_record_stored_at_the_moment">you don\'t have any sleep record stored at the moment.</string>
+    <string name="night_night">Night Night</string>
 </resources>

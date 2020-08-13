@@ -24,15 +24,15 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="32dp"
             app:civ_border_color="@color/colorWhite"
-            app:civ_border_width="2dp"
-            tools:src="@tools:sample/avatars"/>
+            app:civ_border_width="1dp"
+            android:src="@color/colorWhite"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_sleep_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_white_bg"
             android:backgroundTint="@color/colorBlack"
             android:text="@string/start"
@@ -44,39 +44,68 @@
             android:id="@+id/stop_sleep_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/rounded_white_bg"
             android:backgroundTint="@color/colorBlack"
             android:text="@string/stop"
             android:textColor="@color/colorWhite"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_header" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clear_sleep_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_white_bg"
-            android:backgroundTint="@color/colorBlack"
-            android:text="@string/clear"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sleep_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/colorWhite"
-            app:layout_constraintTop_toBottomOf="@id/start_sleep_button"
-            app:layout_constraintBottom_toTopOf="@id/clear_sleep_button"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="72dp"
             android:layout_marginEnd="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_sleep"/>
+            android:layout_marginBottom="32dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_header" />
+
+        <ImageView
+            android:id="@+id/empty_list"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:background="@drawable/cherry_list_is_empty"
+            app:layout_constraintBottom_toBottomOf="@id/sleep_recycler"
+            app:layout_constraintEnd_toEndOf="@id/sleep_recycler"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="@id/sleep_recycler"
+            app:layout_constraintTop_toTopOf="@id/sleep_recycler"
+            android:visibility="gone"
+            app:layout_constraintVertical_bias="0.345" />
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/raleway"
+            android:visibility="gone"
+            android:text="@string/you_don_t_have_any_sleep_record_stored_at_the_moment"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@id/empty_list"
+            app:layout_constraintStart_toStartOf="@id/empty_list"
+            app:layout_constraintTop_toBottomOf="@id/empty_list" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorBlack"
+            app:layout_constraintEnd_toEndOf="@+id/sleep_recycler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_header" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

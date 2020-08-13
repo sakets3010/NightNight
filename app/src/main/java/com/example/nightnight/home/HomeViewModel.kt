@@ -5,20 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nightnight.helper.Sleep
-import com.example.nightnight.home.HomeViewModel.Util.Companion._navigationDone
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 
 class HomeViewModel : ViewModel() {
 
     private val viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main+viewModelJob)
 
     lateinit var docId:String
 
@@ -42,7 +38,6 @@ class HomeViewModel : ViewModel() {
                 Log.d("saved","data added with id ${documentReference.id}")
                 docId = documentReference.id
             }
-            _navigationDone.value = false
     }
 
     fun onStopped() {
@@ -51,14 +46,17 @@ class HomeViewModel : ViewModel() {
                         "endTime" to System.currentTimeMillis()
                     )
                 )
-
-
-         Log.d("saved","data updated having id $docId")
+        Log.d("saved","data updated having id $docId")
     }
     private val _savedNights: MutableLiveData<List<Sleep>> = MutableLiveData()
 
+    fun signUserOut() {
+        Firebase.auth.signOut()
+    }
+
+
     fun onDone():LiveData<List<Sleep>> {
-        db.collection("Users").document(uid!!).collection("sleepData").addSnapshotListener { snapshots, e ->
+        db.collection("Users").document(uid!!).collection("sleepData").whereEqualTo("updated",true).addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Log.d("HomeViewmodel", "Listen failed.", e)
                     return@addSnapshotListener
@@ -73,22 +71,8 @@ class HomeViewModel : ViewModel() {
                 }
                 _savedNights.value = nightList
             }
-
         return _savedNights
     }
-
-    fun onClear() {
-        uiScope.launch {
-            db.collection("Users").document(uid!!).delete()
-        }
-    }
-
-    class Util {
-        companion object {
-            var _navigationDone = MutableLiveData<Boolean>()
-        }
-    }
-
 }
 
 

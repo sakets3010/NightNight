@@ -83,11 +83,7 @@ class SignInFragment : Fragment() {
     }
     override fun onStart() {
         super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            val intent = Intent(requireContext(),MainActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 
 

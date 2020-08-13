@@ -10,8 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if(profile_pic!==null)
-        Picasso.get().load(GoogleSignIn.getLastSignedInAccount(this)?.photoUrl).into(profile_pic)
     }
 
 }

@@ -1,14 +1,10 @@
 package com.example.nightnight.rating
 
 import androidx.lifecycle.ViewModel
-import com.example.nightnight.home.HomeViewModel.Util.Companion._navigationDone
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class RatingViewModel : ViewModel() {
 
@@ -25,11 +21,9 @@ class RatingViewModel : ViewModel() {
 
         db.collection("Users").document(uid!!).collection("sleepData").document(docId).update(
                 mapOf(
-                    "sleepRating" to rating
+                    "sleepRating" to rating,
+                    "updated" to true
                 )
             )
-
-            _navigationDone.value = true
-
     }
 }
