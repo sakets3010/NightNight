@@ -25,8 +25,6 @@ class HomeViewModel : ViewModel() {
 
 
     private var nightList = mutableListOf<Sleep>()
-
-
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
     private val db = Firebase.firestore
 
@@ -49,12 +47,9 @@ class HomeViewModel : ViewModel() {
         Log.d("saved","data updated having id $docId")
     }
     private val _savedNights: MutableLiveData<List<Sleep>> = MutableLiveData()
-
     fun signUserOut() {
         Firebase.auth.signOut()
     }
-
-
     fun onDone():LiveData<List<Sleep>> {
         db.collection("Users").document(uid!!).collection("sleepData").whereEqualTo("updated",true).addSnapshotListener { snapshots, e ->
                 if (e != null) {

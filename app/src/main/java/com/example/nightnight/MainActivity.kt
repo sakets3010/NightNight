@@ -1,10 +1,7 @@
 package com.example.nightnight
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_home.*
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

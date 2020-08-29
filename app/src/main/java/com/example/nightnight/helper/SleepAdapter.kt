@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nightnight.R
 import com.example.nightnight.convertDurationToFormatted
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_sleep.view.*
 import java.text.SimpleDateFormat
 import java.util.*
