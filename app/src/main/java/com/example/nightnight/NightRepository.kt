@@ -11,23 +11,24 @@ import javax.inject.Inject
 
 class NightRepository @Inject constructor(private val nightDao: NightDao) {
 
-    fun getLatestNight() {
-        CoroutineScope(IO).launch {
-            nightDao.getLastNight()
-        }
-    }
-    fun addNight(night: Night){
+
+    fun addNight(night: Night) {
         CoroutineScope(IO).launch {
             nightDao.add(night)
         }
     }
-    fun updateNight(night: Night){
+
+    fun updateNight(night: Night) {
         CoroutineScope(IO).launch {
             nightDao.update(night)
         }
     }
 
-    fun getAllNights():LiveData<List<Night>> = nightDao.getAllEntries()
+    fun getSpecificNight(key:Long) = nightDao.getData(key)
+
+    fun getLatestNight() = nightDao.getLastNight()
+
+    fun getAllNights(): LiveData<List<Night>> = nightDao.getAllEntries()
 
 
 }

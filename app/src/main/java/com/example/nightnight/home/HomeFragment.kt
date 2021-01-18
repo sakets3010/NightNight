@@ -26,20 +26,17 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.startSleepButton.setOnClickListener {
-            viewModel.onStarted()
+            viewModel.startTrack()
             onStartButtonPressed()
             Snackbar.make(requireView(),"sleep timer started",Snackbar.LENGTH_LONG).show()
         }
         binding.stopSleepButton.setOnClickListener {
-            viewModel.onStopped()
+            viewModel.stopTrack()
             val action = HomeFragmentDirections.actionHomeFragmentToRatingFragment("")
             findNavController().navigate(action)
             Snackbar.make(requireView(),"sleep timer stopped",Snackbar.LENGTH_LONG).show()
             onStopButtonPressed()
         }
-
-
-
 
         return binding.root
     }
