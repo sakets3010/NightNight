@@ -1,47 +1,29 @@
 package com.example.nightnight.home
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nightnight.LoginActivity
-import com.example.nightnight.R
 import com.example.nightnight.databinding.FragmentHomeBinding
-import com.example.nightnight.helper.SleepAdapter
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
-    private lateinit var binding: FragmentHomeBinding
+    private val viewModel by viewModels<HomeViewModel>()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_home,
-            container,
-            false
-        )
-        viewModel = ViewModelProvider(this)
-            .get(HomeViewModel::class.java)
-
-        Picasso.get().load(GoogleSignIn.getLastSignedInAccount(requireContext())?.photoUrl).into(binding.profilePic)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.startSleepButton.setOnClickListener {
             viewModel.onStarted()
@@ -50,42 +32,15 @@ class HomeFragment : Fragment() {
         }
         binding.stopSleepButton.setOnClickListener {
             viewModel.onStopped()
-            val action =
-                HomeFragmentDirections.actionHomeFragmentToRatingFragment(viewModel.docId)
+            val action = HomeFragmentDirections.actionHomeFragmentToRatingFragment("")
             findNavController().navigate(action)
             Snackbar.make(requireView(),"sleep timer stopped",Snackbar.LENGTH_LONG).show()
             onStopButtonPressed()
         }
-        binding.profilePic.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Sign Out?")
-                .setMessage("You will be signed out of the app")
-                .setNeutralButton("cancel") { dialog, which ->
-                    // Do nothing
-                }
-                .setPositiveButton("sign out") { dialog, which ->
-                    viewModel.signUserOut()
-                    startActivity(Intent(requireContext(), LoginActivity::class.java))
-                }
-                .show()
 
-        }
-        setLoading()
-        viewModel.onDone().observe(viewLifecycleOwner, Observer {sleepRecord ->
-         if(sleepRecord!=null) {
-             setNotLoading()
-             if (sleepRecord.isEmpty()) {
-                 setEmpty()
-             } else {
-                 setNotEmpty()
-                 Log.d("listing", "data listing: $sleepRecord")
-                 binding.sleepRecycler.adapter = SleepAdapter(sleepRecord)
-                 binding.sleepRecycler.layoutManager =
-                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                 binding.sleepRecycler.scrollToPosition((binding.sleepRecycler.adapter as SleepAdapter).itemCount-1)
-             }
-         }
-        })
+
+
+
         return binding.root
     }
     private fun onStartButtonPressed(){
@@ -116,6 +71,10 @@ class HomeFragment : Fragment() {
         binding.progressBar.visibility = View.GONE
         binding.emptyText.visibility = View.VISIBLE
         binding.emptyList.visibility = View.VISIBLE
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

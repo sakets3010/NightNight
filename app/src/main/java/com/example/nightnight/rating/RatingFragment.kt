@@ -12,7 +12,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.nightnight.R
 import com.example.nightnight.databinding.RatingFragmentBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RatingFragment : Fragment() {
 
     private lateinit var viewModel: RatingViewModel
@@ -21,7 +23,7 @@ class RatingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val args: RatingFragmentArgs by navArgs()
         binding = DataBindingUtil.inflate(inflater,R.layout.rating_fragment,container,false)
         viewModel = ViewModelProvider(this).get(RatingViewModel::class.java)

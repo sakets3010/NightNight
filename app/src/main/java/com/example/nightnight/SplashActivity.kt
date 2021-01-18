@@ -4,8 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     private val SPLASH_TIME_OUT:Long = 3000
@@ -15,15 +16,8 @@ class SplashActivity : AppCompatActivity() {
 
 
         Handler().postDelayed({
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) {
-                val intent = Intent(this,MainActivity::class.java)
-                startActivity(intent)
-            }
-            else{
-                startActivity(Intent(this,LoginActivity::class.java))
-            }
-            finish()
-        }, SPLASH_TIME_OUT)
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+            finish() }, SPLASH_TIME_OUT)
     }
 }

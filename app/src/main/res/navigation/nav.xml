@@ -11,7 +11,7 @@
         android:label="rating_fragment"
         tools:layout="@layout/rating_fragment" >
         <argument
-            android:name="docId"
+            android:name="id"
             app:argType="string"
             />
         <action
