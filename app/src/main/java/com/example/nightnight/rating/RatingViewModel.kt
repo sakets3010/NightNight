@@ -13,11 +13,13 @@ class RatingViewModel @ViewModelInject constructor(
 
     private val viewModelJob = Job()
 
-    fun onSetSleepQuality(quality: Int,key:Long) {
+    fun updateRating(quality: Int,key:Long) {
         viewModelScope.launch {
-            val tonight = repository.getSpecificNight(key) ?: return@launch
-            tonight.sleepRating = quality
-            repository.updateNight(tonight)
+            val tonight = repository.getSpecificNight(key)
+            if (tonight != null) {
+                tonight.sleepRating = quality
+                repository.updateNight(tonight)
+            }
         }
     }
 

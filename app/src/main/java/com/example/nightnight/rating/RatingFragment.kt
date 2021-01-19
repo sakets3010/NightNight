@@ -1,12 +1,11 @@
 package com.example.nightnight.rating
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.nightnight.R
@@ -17,39 +16,44 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RatingFragment : Fragment() {
 
-    private lateinit var viewModel: RatingViewModel
-    private lateinit var binding:RatingFragmentBinding
+    private val viewModel by viewModels<RatingViewModel>()
+    private var _binding: RatingFragmentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val args: RatingFragmentArgs by navArgs()
-        binding = DataBindingUtil.inflate(inflater,R.layout.rating_fragment,container,false)
-        viewModel = ViewModelProvider(this).get(RatingViewModel::class.java)
+        _binding = RatingFragmentBinding.inflate(inflater, container, false)
 
         binding.veryUpset.setOnClickListener {
-            update(1,args.docId)
+            update(1,args.id)
         }
         binding.upset.setOnClickListener {
-            update(2,args.docId)
+            update(2,args.id)
         }
         binding.satisfactory.setOnClickListener {
-            update(3,args.docId)
+            update(3,args.id)
         }
         binding.happy.setOnClickListener {
-            update(4,args.docId)
+            update(4,args.id)
         }
         binding.veryHappy.setOnClickListener {
-            update(5,args.docId)
+            update(5,args.id)
         }
         return binding.root
     }
 
-  private fun update(rating:Int,docId:String){
-      viewModel.updateRating(rating,docId)
+  private fun update(rating:Int,key:Long){
+      viewModel.updateRating(rating,key)
       findNavController().navigate(R.id.action_ratingFragment_to_homeFragment)
       Snackbar.make(requireView(),"sleep record added", Snackbar.LENGTH_LONG).show()
   }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

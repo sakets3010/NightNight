@@ -7,11 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.nightnight.NightRepository
 import com.example.nightnight.db.Night
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -24,11 +20,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     val nights = repository.getAllNights()
 
-
-    private var nightList = mutableListOf<Night>()
-
     private val _navigateToSleepQuality = MutableLiveData<Night>()
-
     val navigateToSleepQuality: LiveData<Night>
         get() = _navigateToSleepQuality
 
@@ -42,7 +34,7 @@ class HomeViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun getNight(): Night? {
+    private suspend fun getNight(): Night? {
         var night = repository.getLatestNight()
         if (night?.endTime != night?.initTime) {
             night = null
@@ -60,6 +52,10 @@ class HomeViewModel @ViewModelInject constructor(
         withContext(Dispatchers.IO) {
             repository.addNight(night)
         }
+    }
+
+    fun doneNavigating() {
+        _navigateToSleepQuality.value = null
     }
 
     fun startTrack() {
@@ -80,6 +76,8 @@ class HomeViewModel @ViewModelInject constructor(
             oldNight.endTime = System.currentTimeMillis()
 
             update(oldNight)
+
+            _navigateToSleepQuality.value = oldNight
         }
     }
 

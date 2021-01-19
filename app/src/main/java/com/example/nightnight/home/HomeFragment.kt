@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nightnight.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        binding.sleepRecycler.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+
         binding.startSleepButton.setOnClickListener {
             viewModel.startTrack()
             onStartButtonPressed()
@@ -32,11 +35,23 @@ class HomeFragment : Fragment() {
         }
         binding.stopSleepButton.setOnClickListener {
             viewModel.stopTrack()
-            val action = HomeFragmentDirections.actionHomeFragmentToRatingFragment("")
-            findNavController().navigate(action)
-            Snackbar.make(requireView(),"sleep timer stopped",Snackbar.LENGTH_LONG).show()
             onStopButtonPressed()
+            Snackbar.make(requireView(),"sleep timer stopped",Snackbar.LENGTH_LONG).show()
         }
+
+        viewModel.navigateToSleepQuality.observe(viewLifecycleOwner, { night ->
+            night?.let {
+                val action = HomeFragmentDirections.actionHomeFragmentToRatingFragment(night.id)
+                findNavController().navigate(action)
+                viewModel.doneNavigating()
+            }
+        })
+
+        viewModel.nights.observe(viewLifecycleOwner, {
+            it?.let {
+                binding.sleepRecycler.adapter = NightAdapter(it)
+            }
+        })
 
         return binding.root
     }

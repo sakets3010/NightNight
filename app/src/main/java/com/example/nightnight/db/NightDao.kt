@@ -16,10 +16,10 @@ interface NightDao {
     suspend fun update(night: Night)
 
     @Query("SELECT * from Night WHERE id = :key")
-    fun getData(key: Long): Night?
+    suspend fun getData(key: Long): Night?
 
     @Query("SELECT * FROM Night ORDER BY id DESC LIMIT 1")
-    fun getLastNight(): Night?
+    suspend fun getLastNight(): Night?
 
 
     @Query("SELECT * FROM Night ORDER BY id DESC")

@@ -9,10 +9,10 @@
         android:id="@+id/ratingFragment"
         android:name="com.example.nightnight.rating.RatingFragment"
         android:label="rating_fragment"
-        tools:layout="@layout/rating_fragment" >
+        tools:layout="@layout/fragment_rating" >
         <argument
             android:name="id"
-            app:argType="string"
+            app:argType="long"
             />
         <action
             android:id="@+id/action_ratingFragment_to_homeFragment"
@@ -28,8 +28,6 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_ratingFragment"
-            app:destination="@id/ratingFragment"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit" />
+            app:destination="@id/ratingFragment" />
     </fragment>
 </navigation>

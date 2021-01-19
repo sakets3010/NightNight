@@ -7,14 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorFragmentBackground">
+
         <TextView
             android:id="@+id/text_header"
+            style="@style/TextToolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            style="@style/TextToolbar"
             android:text="@string/night_night"
             android:textAlignment="center"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_sleep_button"
@@ -46,28 +47,28 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sleep_recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="72dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:background="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_header" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/empty_list"
             android:layout_width="300dp"
             android:layout_height="300dp"
+            android:layout_marginTop="443dp"
             android:background="@drawable/cherry_list_is_empty"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/sleep_recycler"
             app:layout_constraintEnd_toEndOf="@id/sleep_recycler"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="@id/sleep_recycler"
-            app:layout_constraintTop_toTopOf="@id/sleep_recycler"
-            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/text_header"
             app:layout_constraintVertical_bias="0.345" />
 
         <TextView
