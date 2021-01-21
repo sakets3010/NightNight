@@ -25,7 +25,7 @@ class NightAdapter(private val sleep: List<Night>) : RecyclerView.Adapter<NightA
 
     private fun getDateTime(s: Long): String? {
         return try {
-            val sdf = SimpleDateFormat("EEE,hh:mmaa", Locale.getDefault())
+            val sdf = SimpleDateFormat("dd-MMM-yy,hh:mmaa", Locale.getDefault())
             val netDate = Date(s)
             sdf.format(netDate)
         } catch (e: Exception) {
@@ -37,9 +37,17 @@ class NightAdapter(private val sleep: List<Night>) : RecyclerView.Adapter<NightA
         val item = sleep[position]
         val res = holder.itemView.context.resources
         holder.startTime.text = getDateTime(item.initTime)
-        holder.endTime.text = getDateTime(item.endTime)
-        holder.duration.text= convertDurationToFormatted(item.initTime,item.endTime,res)
-        holder.rating.text=item.sleepRating.toString()
+        if(item.endTime != item.initTime){
+            holder.endTime.text = getDateTime(item.endTime)
+            holder.duration.text= convertDurationToFormatted(item.initTime,item.endTime,res)
+            holder.rating.text=item.sleepRating.toString()
+        }
+        else{
+            holder.endTime.visibility = View.GONE
+            holder.duration.visibility = View.GONE
+            holder.rating.visibility = View.GONE
+        }
+
         val img = when(holder.rating.text.toString()){
             "1" -> R.drawable.ic_noun_sad_face_2571147
             "2" -> R.drawable.ic_noun_sad_face_2571156

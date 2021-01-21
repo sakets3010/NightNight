@@ -14,6 +14,10 @@
             android:name="id"
             app:argType="long"
             />
+        <argument
+            android:name="time"
+            app:argType="long"
+            />
         <action
             android:id="@+id/action_ratingFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -30,4 +34,8 @@
             android:id="@+id/action_homeFragment_to_ratingFragment"
             app:destination="@id/ratingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/graphFragment"
+        android:name="com.example.nightnight.monitor.GraphFragment"
+        android:label="GraphFragment" />
 </navigation>

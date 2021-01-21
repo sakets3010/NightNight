@@ -1,6 +1,8 @@
 package com.example.nightnight.rating
 
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.nightnight.R
-import com.example.nightnight.databinding.RatingFragmentBinding
+import com.example.nightnight.databinding.FragmentRatingBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RatingFragment : Fragment() {
 
     private val viewModel by viewModels<RatingViewModel>()
-    private var _binding: RatingFragmentBinding? = null
+    private var _binding: FragmentRatingBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,7 +27,9 @@ class RatingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val args: RatingFragmentArgs by navArgs()
-        _binding = RatingFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentRatingBinding.inflate(inflater, container, false)
+
+        binding.timeText.base = SystemClock.elapsedRealtime() - args.time
 
         binding.veryUpset.setOnClickListener {
             update(1,args.id)
