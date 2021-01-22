@@ -1,10 +1,8 @@
 package com.example.nightnight.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.nightnight.NightRepository
 import com.example.nightnight.db.Night
 import kotlinx.coroutines.Dispatchers
@@ -16,23 +14,37 @@ class HomeViewModel @ViewModelInject constructor(
     private val repository: NightRepository
 ) : ViewModel() {
 
-    private var tonight = MutableLiveData<Night?>()
+    private var _tonight = MutableLiveData<Night?>()
+    val tonight: LiveData<Night?>
+        get() = _tonight
+    private lateinit var _night :Night
 
     val nights = repository.getAllNights()
 
-    private val _navigateToSleepQuality = MutableLiveData<Night>()
+    private var _navigateToSleepQuality = MutableLiveData<Night>()
     val navigateToSleepQuality: LiveData<Night>
         get() = _navigateToSleepQuality
+
+    private var _timeDifference = MutableLiveData<Long>()
+    val timeDifference: LiveData<Long>
+        get() = _timeDifference
 
     init {
         initializeTonight()
     }
 
+
     private fun initializeTonight() {
         viewModelScope.launch {
-            tonight.value = getNight()
+            _tonight.value = getNight()
+            //getTimeDifference()
+            Log.d("differ", "func called")
         }
     }
+
+//    private suspend fun getTimeDifference () {
+//        _timeDifference.value = tonight.value?.initTime
+//    }
 
     private suspend fun getNight(): Night? {
         var night = repository.getLatestNight()
@@ -40,12 +52,21 @@ class HomeViewModel @ViewModelInject constructor(
             night = null
         }
         return night
-        }
+    }
+
 
     private suspend fun update(night: Night) {
         withContext(Dispatchers.IO) {
             repository.updateNight(night)
         }
+    }
+
+    val startButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
+
+    val stopButtonVisible = Transformations.map(tonight) {
+        null != it
     }
 
     private suspend fun insert(night: Night) {
@@ -60,11 +81,12 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun startTrack() {
         viewModelScope.launch {
+
             val newNight = Night()
 
             insert(newNight)
 
-            tonight.value = getNight()
+            _tonight.value = getNight()
         }
     }
 

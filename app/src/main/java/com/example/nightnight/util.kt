@@ -11,19 +11,20 @@ private val ONE_HOUR_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 
 fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
     val durationMilli = endTimeMilli - startTimeMilli
-    val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
     return when {
         durationMilli < ONE_MINUTE_MILLIS -> {
             val seconds = TimeUnit.SECONDS.convert(durationMilli, TimeUnit.MILLISECONDS)
-            "$seconds seconds"
+            "$seconds second(s)"
         }
         durationMilli < ONE_HOUR_MILLIS -> {
             val minutes = TimeUnit.MINUTES.convert(durationMilli, TimeUnit.MILLISECONDS)
-            "$minutes minutes"
+            val seconds = TimeUnit.SECONDS.convert(durationMilli % ONE_MINUTE_MILLIS, TimeUnit.MILLISECONDS)
+            "$minutes minute(s) $seconds second(s)"
         }
         else -> {
             val hours = TimeUnit.HOURS.convert(durationMilli, TimeUnit.MILLISECONDS)
-            "$hours minutes"
+            val minutes = TimeUnit.MINUTES.convert(durationMilli % ONE_HOUR_MILLIS, TimeUnit.MILLISECONDS)
+            "$hours hour(s) $minutes minute(s)"
         }
     }
 }

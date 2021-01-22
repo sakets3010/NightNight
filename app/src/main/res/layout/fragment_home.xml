@@ -39,7 +39,6 @@
         android:backgroundTint="@color/colorBlack"
         android:text="@string/stop"
         android:textColor="@color/colorWhite"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/start_sleep_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/start_sleep_button" />
