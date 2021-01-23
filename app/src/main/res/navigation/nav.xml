@@ -21,8 +21,8 @@
         <action
             android:id="@+id/action_ratingFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -32,7 +32,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_ratingFragment"
-            app:destination="@id/ratingFragment" />
+            app:destination="@id/ratingFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popEnterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/graphFragment"

@@ -1,7 +1,7 @@
 package com.example.nightnight.di
 
 import android.content.Context
-import com.example.nightnight.NightRepository
+import com.example.nightnight.db.NightRepository
 import com.example.nightnight.db.NightDao
 import com.example.nightnight.db.NightDatabase
 import dagger.hilt.InstallIn

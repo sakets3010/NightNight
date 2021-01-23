@@ -4,18 +4,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="client_id">1078958188393-g0dqbsee7li9bqh7m0o8drvr31u9h0um.apps.googleusercontent.com</string>
     <string name="rate_your_sleep">Rate your Sleep</string>
-    <string name="start_time">start time :</string>
-    <string name="end_time">end time :</string>
-    <string name="sleep_rating">sleep rating :</string>
+    <string name="start_time">Start Time :</string>
+    <string name="end_time">End Time :</string>
+    <string name="sleep_rating">Sleep Rating :</string>
     <string name="duration">duration</string>
-    <string name="duration_">duration :</string>
+    <string name="duration_">Duration :</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="clear">clear</string>
     <string name="minutes_length">%d minutes</string>
     <string name="hours_length">%d hours</string>
     <string name="seconds_length">%d seconds</string>
-    <string name="you_don_t_have_any_sleep_record_stored_at_the_moment">you don\'t have any sleep record stored at the moment.</string>
+    <string name="you_don_t_have_any_sleep_record_stored_at_the_moment"> sleep record empty :(</string>
     <string name="night_night">Night Night</string>
     <string name="sign_in_to_continue">Sign In to Continue</string>
     <string name="poor">Poor</string>
@@ -25,4 +25,5 @@
     <string name="great">Great</string>
     <string name="home">Home</string>
     <string name="graph">Graph</string>
+    <string name="records_empty">Records Empty :(</string>
 </resources>

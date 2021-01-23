@@ -1,8 +1,6 @@
-package com.example.nightnight
+package com.example.nightnight.db
 
 import androidx.lifecycle.LiveData
-import com.example.nightnight.db.Night
-import com.example.nightnight.db.NightDao
 import javax.inject.Inject
 
 

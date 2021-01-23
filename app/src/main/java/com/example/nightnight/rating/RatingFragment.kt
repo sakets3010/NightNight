@@ -29,7 +29,7 @@ class RatingFragment : Fragment() {
         val args: RatingFragmentArgs by navArgs()
         _binding = FragmentRatingBinding.inflate(inflater, container, false)
 
-        binding.timeText.base = SystemClock.elapsedRealtime() - args.time
+        binding.timeText.base = SystemClock.elapsedRealtime().minus(args.time)
 
         binding.veryUpset.setOnClickListener {
             update(1,args.id)
@@ -46,6 +46,7 @@ class RatingFragment : Fragment() {
         binding.veryHappy.setOnClickListener {
             update(5,args.id)
         }
+
         return binding.root
     }
 

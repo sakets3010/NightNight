@@ -1,10 +1,9 @@
 package com.example.nightnight.home
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.nightnight.NightRepository
 import com.example.nightnight.db.Night
+import com.example.nightnight.db.NightRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,37 +13,25 @@ class HomeViewModel @ViewModelInject constructor(
     private val repository: NightRepository
 ) : ViewModel() {
 
-    private var _tonight = MutableLiveData<Night?>()
-    val tonight: LiveData<Night?>
-        get() = _tonight
-    private lateinit var _night :Night
+    private var _night = MutableLiveData<Night?>()
+    val night: LiveData<Night?>
+        get() = _night
 
-    val nights = repository.getAllNights()
+    private var _navigateTo = MutableLiveData<Night>()
+    val navigateTo: LiveData<Night>
+        get() = _navigateTo
 
-    private var _navigateToSleepQuality = MutableLiveData<Night>()
-    val navigateToSleepQuality: LiveData<Night>
-        get() = _navigateToSleepQuality
-
-    private var _timeDifference = MutableLiveData<Long>()
-    val timeDifference: LiveData<Long>
-        get() = _timeDifference
+    val nightList = repository.getAllNights()
 
     init {
         initializeTonight()
     }
 
-
     private fun initializeTonight() {
         viewModelScope.launch {
-            _tonight.value = getNight()
-            //getTimeDifference()
-            Log.d("differ", "func called")
+            _night.value = getNight()
         }
     }
-
-//    private suspend fun getTimeDifference () {
-//        _timeDifference.value = tonight.value?.initTime
-//    }
 
     private suspend fun getNight(): Night? {
         var night = repository.getLatestNight()
@@ -54,19 +41,10 @@ class HomeViewModel @ViewModelInject constructor(
         return night
     }
 
-
     private suspend fun update(night: Night) {
         withContext(Dispatchers.IO) {
             repository.updateNight(night)
         }
-    }
-
-    val startButtonVisible = Transformations.map(tonight) {
-        null == it
-    }
-
-    val stopButtonVisible = Transformations.map(tonight) {
-        null != it
     }
 
     private suspend fun insert(night: Night) {
@@ -76,7 +54,7 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun doneNavigating() {
-        _navigateToSleepQuality.value = null
+        _navigateTo.value = null
     }
 
     fun startTrack() {
@@ -86,21 +64,29 @@ class HomeViewModel @ViewModelInject constructor(
 
             insert(newNight)
 
-            _tonight.value = getNight()
+            _night.value = getNight()
         }
     }
 
     fun stopTrack() {
         viewModelScope.launch {
 
-            val oldNight = tonight.value ?: return@launch
+            val oldNight = night.value ?: return@launch
 
             oldNight.endTime = System.currentTimeMillis()
 
             update(oldNight)
 
-            _navigateToSleepQuality.value = oldNight
+            _navigateTo.value = oldNight
         }
+    }
+
+    val isStartVisible = Transformations.map(_night) {
+        null == it
+    }
+
+    val isStopVisible = Transformations.map(_night) {
+        null != it
     }
 
 }

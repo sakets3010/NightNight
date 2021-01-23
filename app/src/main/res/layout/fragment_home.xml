@@ -21,14 +21,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="84dp"
         android:background="@drawable/rounded_white_bg"
-        android:backgroundTint="@color/colorBlack"
         android:text="@string/start"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sleep_recycler" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/stop_sleep_button"
@@ -36,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_white_bg"
-        android:backgroundTint="@color/colorBlack"
         android:text="@string/stop"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="@+id/start_sleep_button"
@@ -45,16 +42,16 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
+        android:id="@+id/chronoCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/sleep_recycler"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="25dp"
+        android:backgroundTint="@color/colorFragmentBackground"
+        app:layout_constraintEnd_toEndOf="@id/sleep_recycler"
+        app:layout_constraintStart_toStartOf="@id/sleep_recycler"
         app:layout_constraintTop_toBottomOf="@+id/text_header"
         app:layout_constraintVertical_chainStyle="spread">
 
@@ -65,17 +62,15 @@
             <Chronometer
                 android:id="@+id/sleepWatch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:textAlignment="center"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,19 +90,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageView
         android:id="@+id/empty_list"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="443dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="32dp"
         android:background="@drawable/cherry_list_is_empty"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@id/sleep_recycler"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@id/sleep_recycler"
-        app:layout_constraintTop_toBottomOf="@+id/text_header" />
+        app:layout_constraintBottom_toTopOf="@id/start_sleep_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chronoCardView" />
 
     <TextView
         android:id="@+id/empty_text"
@@ -120,20 +116,11 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/empty_list"
         app:layout_constraintEnd_toEndOf="@id/empty_list"
-        app:layout_constraintStart_toStartOf="@id/empty_list"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/empty_list" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorBlack"
-        app:layout_constraintEnd_toEndOf="@+id/sleep_recycler"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_header" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

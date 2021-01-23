@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Night::class], version = 3,exportSchema = false)
 abstract class NightDatabase : RoomDatabase() {
+
     abstract fun nightDao(): NightDao
 
     companion object {

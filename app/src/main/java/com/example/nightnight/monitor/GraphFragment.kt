@@ -8,9 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.nightnight.R
 import com.example.nightnight.databinding.FragmentGraphBinding
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
 import dagger.hilt.android.AndroidEntryPoint
 import org.eazegraph.lib.models.BarModel
 
@@ -34,16 +31,35 @@ class GraphFragment : Fragment() {
 
     private fun setBarChart() {
         viewModel.nights.observe(viewLifecycleOwner, {
-            it.reversed().forEach { night ->
-                binding.barChart.addBar(
-                    BarModel(
-                        viewModel.getDateTime(night.initTime),
-                        night.sleepRating.toFloat(), R.color.colorBlack
+            if (it.isNotEmpty()) {
+                setNotEmpty()
+                it.forEach { night ->
+                    binding.barChart.addBar(
+                        BarModel(
+                            viewModel.getDateTime(night.initTime),
+                            night.sleepRating.toFloat(), R.color.colorBlack
+                        )
                     )
-                )
+                }
             }
+            else{
+                setEmpty()
+            }
+
         })
 
+    }
+
+    private fun setEmpty() {
+        binding.barChart.visibility = View.GONE
+        binding.emptyList.visibility = View.VISIBLE
+        binding.emptyText.visibility = View.VISIBLE
+    }
+
+    private fun setNotEmpty() {
+        binding.barChart.visibility = View.VISIBLE
+        binding.emptyList.visibility = View.GONE
+        binding.emptyText.visibility = View.GONE
     }
 
     override fun onDestroyView() {
