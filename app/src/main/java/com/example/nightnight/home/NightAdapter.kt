@@ -85,11 +85,13 @@ class NightAdapter(private val sleep: List<Night>) :
 
         holder.button.setOnClickListener {
 
-            useIntent(
-                item.initTime.toString(),
-                convertDurationToFormatted(item.initTime, item.endTime),
-                item.sleepRating.toString(), holder.itemView.context
-            )
+            getDateTime(item.initTime)?.let { it1 ->
+                useIntent(
+                    it1,
+                    convertDurationToFormatted(item.initTime, item.endTime),
+                    item.sleepRating.toString(), holder.itemView.context
+                )
+            }
 
         }
     }
