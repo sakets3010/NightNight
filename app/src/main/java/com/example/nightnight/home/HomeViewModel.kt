@@ -24,10 +24,10 @@ class HomeViewModel @ViewModelInject constructor(
     val nightList = repository.getAllNights()
 
     init {
-        initializeTonight()
+        startTonight()
     }
 
-    private fun initializeTonight() {
+    private fun startTonight() {
         viewModelScope.launch {
             _night.value = getNight()
         }
@@ -60,9 +60,9 @@ class HomeViewModel @ViewModelInject constructor(
     fun startTrack() {
         viewModelScope.launch {
 
-            val newNight = Night()
+            val nextNight = Night()
 
-            insert(newNight)
+            insert(nextNight)
 
             _night.value = getNight()
         }
@@ -71,13 +71,13 @@ class HomeViewModel @ViewModelInject constructor(
     fun stopTrack() {
         viewModelScope.launch {
 
-            val oldNight = night.value ?: return@launch
+            val previousNight = night.value ?: return@launch
 
-            oldNight.endTime = System.currentTimeMillis()
+            previousNight.endTime = System.currentTimeMillis()
 
-            update(oldNight)
+            update(previousNight)
 
-            _navigateTo.value = oldNight
+            _navigateTo.value = previousNight
         }
     }
 
